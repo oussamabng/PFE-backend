@@ -11,6 +11,7 @@ import {
 } from 'apollo-server-core';
 import { join } from 'path';
 import { UsersModule } from './users/users.module';
+import { User } from './users/entities/user.entity';
 
 @Module({
   imports: [
@@ -24,7 +25,7 @@ import { UsersModule } from './users/users.module';
       username: 'postgres',
       password: 'password',
       database: 'vrp-dev',
-      entities: [],
+      entities: [User],
       synchronize: true,
       autoLoadEntities: true,
     }),
@@ -32,8 +33,6 @@ import { UsersModule } from './users/users.module';
       driver: ApolloDriver,
       playground: false,
       debug: false,
-      introspection: true,
-      cache: 'bounded',
       plugins: [
         process.env.NODE_ENV === 'production'
           ? ApolloServerPluginLandingPageProductionDefault()
