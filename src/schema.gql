@@ -1,0 +1,99 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type User {
+  id: ID!
+  email: String!
+  role: UserRole!
+  status: UserStatus!
+  phoneNumber: String!
+  adress: String!
+  dateOfBirth: DateTime!
+  carModel: String!
+  licensePlate: String!
+  otp: String!
+  otpCodeExpireDate: String!
+  carColor: String!
+  createdAt: DateTime!
+  updatedAt: DateTime!
+}
+
+enum UserRole {
+  ADMIN
+  DELIVERY
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+  PENDING
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type ResponseTokenDto {
+  access_token: String!
+  refresh_token: String!
+}
+
+type DeliveryResponseDto {
+  access_token: String
+  refresh_token: String
+  status: String!
+}
+
+type ResponseUserDto {
+  items: [User!]
+  totalCount: Int
+  currentPage: Int
+  totalPages: Int
+  hasNextPage: Boolean
+}
+
+type Query {
+  getAllDeliveryUsers(pagination: PaginationDto!, search: SearchDto!): ResponseUserDto!
+  helloWorld: String!
+}
+
+input PaginationDto {
+  page: Int! = 1
+  limit: Int! = 1
+}
+
+input SearchDto {
+  keyword: String! = ""
+}
+
+type Mutation {
+  createAdmin(input: CreateAdminDto!): String!
+  createDelivery(input: CreateDeliveryDto!): String!
+  loginAdmin(input: LoginAdmin!): ResponseTokenDto!
+  loginDelivery(input: LoginAdmin!): DeliveryResponseDto!
+  verifyOtpDelivery(input: VerifyOtp!): String!
+  refreshToken: ResponseTokenDto!
+  updateStatusDelivery(userId: Float!, status: String!): User!
+}
+
+input CreateAdminDto {
+  email: String!
+  password: String!
+}
+
+input CreateDeliveryDto {
+  email: String!
+  password: String!
+}
+
+input LoginAdmin {
+  email: String!
+  password: String!
+}
+
+input VerifyOtp {
+  code: String!
+  email: String!
+}
